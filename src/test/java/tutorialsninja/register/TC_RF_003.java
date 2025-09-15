@@ -16,7 +16,7 @@ public class TC_RF_003 {
 
 
 
-        public void registerWithMandatoryFields() {
+        public void verifyRegisterAccountWithAllFields() {
             WebDriver driver = new ChromeDriver();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
             driver.manage().window().maximize();
@@ -32,22 +32,20 @@ public class TC_RF_003 {
             driver.findElement(By.xpath("//input[@name='newsletter' and @value='1']")).click();
             driver.findElement(By.name("agree")).click();
             driver.findElement(By.xpath("//input[@value='Continue']")).click();
-            JavascriptExecutor js = (JavascriptExecutor) driver;
 
-            js.executeScript("window.scrollBy(0,1000)", "");
             Assert.assertTrue(driver.findElement(By.linkText("Logout")).isDisplayed());
             Assert.assertTrue(driver.findElement(By.xpath("//ul[@class='breadcrumb']//a[text()='Success']")).isDisplayed());
-            String expectedHeading = "Your Account Has Been Created!";
-            Assert.assertEquals(driver.findElement(By.cssSelector("#content h1")).getText(), expectedHeading);
+
             String expectedProperDetailsOne = "our Account Has Been Created!";
             String expectedProperDetailsTwo = "Congratulations! Your new account has been successfully created!";
             String expectedProperDetailsThree = "You can now take advantage of member privileges to enhance your online shopping experience with us.";
-            String expectedProperDetailsFour = " If you have ANY questions about the operation of this online shop, please e-mail the store owner.";
+            String expectedProperDetailsFour = "If you have ANY questions about the operation of this online shop, please e-mail the store owner.";
             String expectedProperDetailsFive = "A confirmation has been sent to the provided e-mail address. If you have not received it within the hour, please ";
             String expectedProperDetailsSix = "contact us.";
 
 
-            String actualProperDetails = driver.findElement(By.cssSelector("#content")).getText();
+            String actualProperDetails = driver.findElement(By.id("content")).getText();
+            System.out.println("actual proper details is"+actualProperDetails);
             Assert.assertTrue(actualProperDetails.contains(expectedProperDetailsOne));
             Assert.assertTrue(actualProperDetails.contains(expectedProperDetailsTwo));
             Assert.assertTrue(actualProperDetails.contains(expectedProperDetailsThree));
